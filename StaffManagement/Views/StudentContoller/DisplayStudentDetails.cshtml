@@ -1,0 +1,146 @@
+﻿@model IEnumerable<StaffManagement.Core.Model.StudentDetails>
+
+@{
+    ViewData["Title"] = "DisplayStudentDetails";
+}
+
+
+<h1>ImportExcelFile</h1>
+
+<form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
+    <dl>
+        <dt>
+            <label>Upload Excel:</label>
+        </dt>
+        <dd>
+            <input type="file" name="FormFile" id="FormFile">
+
+        </dd>
+    </dl>
+    <input class="btn" type="submit" value="Upload" />
+</form>
+<br />
+<div class="">
+    <!--Show Message if file is uploaded or not-->
+    @ViewBag.Message
+</div>
+<p>
+
+    @Html.ActionLink("CreateNewStudentDetail", "AddStudentDetails", new { @class = "btn btn-success" })
+</p>
+<table class="table table-bordered table-striped table-light table-hover">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotherFirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotherLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FatherOccupation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RollNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotherFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotherLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentPhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherPhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherOccupation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RollNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditStudentDetails", new { id = item.StudentId }, new { @class = "btn btn-success" })
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "StudentDeleteDetails", new { id = item.StudentId, @class = "btn btn-success" }, new { onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript"> window.onload = function () { alert("@ViewBag.Message"); };</script>
+}

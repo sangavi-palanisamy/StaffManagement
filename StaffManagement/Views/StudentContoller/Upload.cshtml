@@ -1,0 +1,28 @@
+﻿@model StaffManagement.Core.Model.StudentMarkDetails
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h1>ImportExcelFile</h1>
+
+<form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
+    <dl>
+        <dt>
+            <label>Upload Excel:</label>
+        </dt>
+        <dd>
+            <input type="file" name="FormFile" id="FormFile">
+
+        </dd>
+    </dl>
+    <input class="btn" type="submit" value="Upload" />
+</form>
+<br />
+<div class="">
+    <!--Show Message if file is uploaded or not-->
+    @ViewBag.Message
+</div>
+<@Html.ActionLink("downloadview","Fileconvert","Employee")>

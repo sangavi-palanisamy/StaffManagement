@@ -1,0 +1,376 @@
+﻿@model StaffManagement.Core.Model.StudentDetails
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .error {
+        color: red;
+    }
+    i{
+        color:red;
+    }
+</style>
+<h1 class="text-center text-success">STUDENT DETAILS</h1>
+@using (Html.BeginForm("AddStudentsDetails", "StudentContoller", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "formDetails" }))
+{
+<div class="container bg-light">
+    <div class="row">
+        <table class="tab col-6">
+
+            <tr class="col-6">
+                <td>
+                    @Html.HiddenFor(model => model.StudentId)
+                </td>
+
+                <td> @Html.HiddenFor(model => model.StudentId)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FirstName, new { name = "Firstname" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.FirstName)</td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.LastName, new { name = "LastName" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.LastName)</td>
+
+            </tr>
+
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Gender)<i>*</i></td>
+
+
+                <td>
+                    <span>Male: </span> @Html.RadioButtonFor(model => model.Gender, "Male", false)
+                    <span>Female: </span> @Html.RadioButtonFor(model => model.Gender, "Female", false)
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FatherFirstName, new { name = "FatherFirstName" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.FatherFirstName)</td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FatherLastName, new { name = "FatherLastName" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.FatherLastName)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.MotherFirstName, new { name = "MotherFirstName" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.MotherFirstName)</td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.MotherLastName, new { name = "MotherLastName" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.MotherLastName)</td>
+
+            </tr>
+        </table>
+        <table class="tab col-6">
+            <tr>
+                <td> @Html.LabelFor(model => model.DateOfBirth)<i>*</i></td>
+                <td> @Html.TextBoxFor(model => model.DateOfBirth, "", new { @class = "form-control", type = "date" })</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Email, new { name = "Email" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.Email)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.StudentPhoneNumber, new { name = "StudentPhoneNumber" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.StudentPhoneNumber)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FatherPhoneNumber, new { name = "FatherPhoneNumber" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.FatherPhoneNumber)</td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FatherOccupation, new { name = "FatherOccupation" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.FatherOccupation)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RollNumber, new { name = "RollNumber" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.RollNumber)</td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Password, new { name = "Password" })<i>*</i>
+
+                </td>
+
+                <td> @Html.TextBoxFor(model => model.Password)</td>
+
+            </tr>
+
+        </table>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
+            <input type="reset" value="Reset" class="btn btn-success" />
+        </div>
+    </div>
+
+    @*@if(Model.StudentId!=0)
+        {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" onclick="SubmitDetails()" id="buttonName" />
+                <input type="reset" value="Reset" class="btn btn-default" />
+            </div>
+        </div>
+        }
+        else
+        {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" onclick="SubmitDetails()" id="buttonName" />
+                <input type="reset" value="Reset" class="btn btn-default" />
+            </div>
+        </div>
+        }*@
+</div>
+
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript"> window.onload = function () { alert("@ViewBag.Message"); };</script>
+}
+<span class="lp">
+
+    @Html.ActionLink("Back to Login", "StaffLogin")
+</span>
+<span class="li">
+    
+    @Html.ActionLink("Back to Listpage", "DisplayStudentDetails")
+</span>
+
+
+
+
+    <script type="text/javascript">
+
+
+    $(function () {
+
+            $("#formDetails").validate({
+                rules: {
+                    FirstName:
+                    {
+                        required: true,
+
+                    },
+                    LastName:
+                    {
+                        required: true,
+
+                    },
+                    Gender:
+                    {
+                        required: true
+                    },
+                    FatherFirstName:
+                    {
+                        required: true
+                    },
+                    FatherLastName:
+                    {
+                        required: true
+                    },
+                    MotherFirstName:
+                    {
+                        required: true
+                    },
+                    MotherLastName:
+                    {
+                        required: true
+                    },
+                    DateOfBirth:
+                    {
+                        required: true
+                    },
+                    Email:
+                    {
+                        required: true,
+                        email: true
+                    },
+                    StudentPhoneNumber:
+                    {
+                        required: true,
+                         minlength: 10,
+                        maxlength: 10
+                    },
+                    FatherPhoneNumber:
+                    {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    FatherOccupation:
+                    {
+                        required: true
+
+                    },
+                    RollNumber:
+                    {
+                        required: true
+                    },
+                    Password:
+                     {
+                            required: true
+                     }
+
+
+
+                },
+                messages:
+                {
+                    FirstName:
+                    {
+                        required: "FirstName is required",
+
+                    },
+                    LastName:
+                    {
+                        required: "LastName is required",
+
+
+                    },
+                    Gender:
+                    {
+                        required: "Gender is required"
+
+                    },
+                    FatherFirstName:
+                    {
+                        required: "FatherFirstName is required"
+                    },
+                    FatherLastName:
+                    {
+                        required: "FatherLastName is required"
+                    },
+                    MotherFirstName:
+                    {
+                        required: "MotherFirstName is required"
+                    },
+                    MotherLastName:
+                    {
+                        required: "MotherLastName is required"
+
+                    },
+                    DateOfBirth:
+                    {
+                        required: "DateOfBirth is required"
+                    },
+                    Email:
+                    {
+                        required: "Email is required"
+
+                    },
+                    StudentPhoneNumber:
+                    {
+                        required: "StudentPhoneNumber is required",
+                         minlength: "MinimumLength is 10",
+                        maxlength: "Maximum Length is 10"
+                    },
+                    FatherPhoneNumber:
+                    {
+                        required: "StudentPhoneNumber is required",
+                        minlength: "MinimumLength is 10",
+                        maxlength: "Maximum Length is 10"
+
+                    },
+                    FatherOccupation:
+                    {
+                        required: "FatherOccupation is required"
+
+                    },
+                    RollNumber:
+                    {
+                        required: "RollNumber is required"
+
+                    },
+                    Password:
+                    {
+                        required: "Password is required"
+                    }
+
+
+
+                }
+
+            });
+    });
+
+
+
+    function SubmitDetails() {
+
+        if ($("#formDetails").validate()) {
+            $("#formDetails").submit();
+        }
+    }
+
+
+
+</script>

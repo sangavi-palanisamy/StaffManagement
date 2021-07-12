@@ -19,5 +19,7 @@ namespace StaffManagement.Core.IRepository
         public void ImportFileUpload(FileUpload fileupload);
         public List<StudentMarkDetails> GetStudentMarkList(StudentDetails StudentList);
         public bool StudentLogin(StudentDetails loginDetails);
+        public List<StudentMarkDetails> AllStudentMarkList();
+        public bool DeleteMark(int id);
     }
 }

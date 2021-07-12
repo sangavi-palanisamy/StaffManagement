@@ -8,6 +8,7 @@ namespace StaffManagement.Core.Model
 {
     public class StudentMarkDetails
     {
+        public int MarkId { get; set; }
         public string Roll_No { get; set; }
         public string Name { get; set; }
         public int Tamil { get; set; }

@@ -142,5 +142,19 @@ namespace StudentPortal.Api.Controllers
             return Ok(getMarkList);
         }
         #endregion
+        [HttpGet]
+       public ActionResult GetAllStudentMarkDetails()
+        {
+            var getMarkList = _testService.AllStudentMarkList();
+            return Ok(getMarkList);
+        }
+        [HttpDelete]
+        public ActionResult DeleteStudentMark(int id)
+
+        {
+            _testService.DeleteMark(id);
+            return Ok();
+        }
+ 
     }
 }

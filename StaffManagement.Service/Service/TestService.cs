@@ -93,5 +93,23 @@ namespace StaffManagement.Service.Service
             return _testRepository.GetStudentMarkList(StudentList);
         }
         #endregion
+
+        #region AllStudentMarkList
+
+      
+        public List<StudentMarkDetails> AllStudentMarkList()
+        {
+            return _testRepository.AllStudentMarkList();
+        }
+        #endregion
+
+        #region DeleteMark
+
+        
+        public bool DeleteMark(int id)
+        {
+            return _testRepository.DeleteMark(id);
+        }
+        #endregion
     }
 }

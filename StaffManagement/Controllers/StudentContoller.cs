@@ -47,7 +47,8 @@ namespace StaffManagement.Controllers
                     var result = tmp.Content.ReadAsAsync<bool>().Result;
                     if (result == true)
                     {
-                        
+                        HttpContext.Session.SetString("token", loginDetails.StaffName);
+                        TempData["login"] = "Login SucessFully";
                         return RedirectToAction("DisplayStudentDetails");
                     }
                     else
@@ -95,14 +96,16 @@ namespace StaffManagement.Controllers
                     var result = tmp.Content.ReadAsAsync<bool>().Result;
                     if (result == true)
                     {
-                      return RedirectToAction("StudentMarkView",loginDetails);
+                        HttpContext.Session.SetString("studenttoken", loginDetails.RollNumber);
+                        TempData["login"] = "Login SuccessFully";
+                        return RedirectToAction("StudentMarkView",loginDetails);
                         
                     }
                     else
                     {
                         ViewBag.Message = "Please enter the correct username and password";
 
-                        return View("Login");
+                        return View("StudentLogin");
 
                     }
 
@@ -119,18 +122,24 @@ namespace StaffManagement.Controllers
 
         public ActionResult StudentMarkView(StudentDetails StudentList)
         {
-
-            using (HttpClient client = new HttpClient())
+            if (HttpContext.Session.GetString("token") != null)
             {
-                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/GetStudentMarkDetails");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var ItemJson = new StringContent(JsonSerializer.Serialize(StudentList), System.Text.Encoding.UTF8, "application/json");
-                var tmp = client.PostAsync(client.BaseAddress, ItemJson).Result;
-                var result = tmp.Content.ReadAsAsync<List<StudentMarkDetails>>().Result;
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/GetStudentMarkDetails");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var ItemJson = new StringContent(JsonSerializer.Serialize(StudentList), System.Text.Encoding.UTF8, "application/json");
+                    var tmp = client.PostAsync(client.BaseAddress, ItemJson).Result;
+                    var result = tmp.Content.ReadAsAsync<List<StudentMarkDetails>>().Result;
 
 
-                return View(result);
+                    return View(result);
 
+                }
+            }
+            else
+            {
+                return RedirectToAction("StudentLogin");
             }
           
         }
@@ -139,35 +148,43 @@ namespace StaffManagement.Controllers
         #region CreatingStudentDetail
         public IActionResult AddStudentDetails()
         {
-            return View();
+            StudentDetails studentEntry = new StudentDetails();
+            return View(studentEntry);
         }
         [HttpPost]
         public IActionResult AddStudentsDetails(StudentDetails studentEntry)
         {
-            using (HttpClient client = new HttpClient())
+            if (HttpContext.Session.GetString("token") != null)
             {
-
-              
-
-                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/AddStudentPersonalDetails");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var ItemJson = new StringContent(JsonSerializer.Serialize(studentEntry), System.Text.Encoding.UTF8, "application/json");
-                var tmp = client.PostAsync(client.BaseAddress, ItemJson).Result;
-                var result = tmp.Content.ReadAsAsync<bool>().Result;
-
-
-
-                if (result == true)
+                using (HttpClient client = new HttpClient())
                 {
 
-                    TempData["Message"] = "Book Details Added Sucessfully";
-                }
-                else
-                {
-                    TempData["Message"] = "Book Details Edited Sucessfully";
-                }
-                return RedirectToAction("DisplayStudentDetails");
 
+
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/AddStudentPersonalDetails");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var ItemJson = new StringContent(JsonSerializer.Serialize(studentEntry), System.Text.Encoding.UTF8, "application/json");
+                    var tmp = client.PostAsync(client.BaseAddress, ItemJson).Result;
+                    var result = tmp.Content.ReadAsAsync<bool>().Result;
+
+
+
+                    if (result == true)
+                    {
+
+                        TempData["Message"] = "Student Details Added Sucessfully";
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Student Details Edited Sucessfully";
+                    }
+                    return RedirectToAction("DisplayStudentDetails");
+
+                }
+            }
+            else
+            {
+                return RedirectToAction("StaffLogin");
             }
             //_testService.AddBook(bookDetails);
 
@@ -178,18 +195,25 @@ namespace StaffManagement.Controllers
         #region GetStudentDetails
         public ActionResult DisplayStudentDetails()
         {
-            using (HttpClient client = new HttpClient())
+            if (HttpContext.Session.GetString("token") != null)
             {
-                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/GetStudentPersonalDetails");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var tmp = client.GetAsync(client.BaseAddress).Result;
-                var result = tmp.Content.ReadAsAsync<List<StudentDetails>>().Result;
-               
-               
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/GetStudentPersonalDetails");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var tmp = client.GetAsync(client.BaseAddress).Result;
+                    var result = tmp.Content.ReadAsAsync<List<StudentDetails>>().Result;
+
+
                     return View(result);
-                
+
+                }
             }
-            
+            else
+            {
+                return RedirectToAction("StaffLogin");
+
+            }
 
         }
         #endregion
@@ -199,14 +223,21 @@ namespace StaffManagement.Controllers
         
         public IActionResult EditStudentDetails(int id)
         {
-            using (HttpClient client = new HttpClient())
+            if (HttpContext.Session.GetString("token") != null)
             {
-                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var tmp = client.GetAsync("EditStudent?id=" + id).Result;
-                var result = tmp.Content.ReadAsAsync<StudentDetails>().Result;
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var tmp = client.GetAsync("EditStudent?id=" + id).Result;
+                    var result = tmp.Content.ReadAsAsync<StudentDetails>().Result;
 
-                return View("AddStudentDetails", result);
+                    return View("AddStudentDetails", result);
+                }
+            }
+            else
+            {
+                return RedirectToAction("StaffLogin");
             }
 
         }
@@ -216,15 +247,23 @@ namespace StaffManagement.Controllers
         #region StudentDeleteDetails
         public IActionResult StudentDeleteDetails(int id)
         {
-            using (HttpClient client = new HttpClient())
+            if (HttpContext.Session.GetString("token") != null)
             {
-                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/DeleteStudent");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var tmp = client.DeleteAsync("?id=" + id).Result;
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/DeleteStudent");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var tmp = client.DeleteAsync("?id=" + id).Result;
+                }
+                //_testService.DeleteBook(id);
+
+                return RedirectToAction("DisplayStudentDetails");
             }
-            //_testService.DeleteBook(id);
-           
-            return RedirectToAction("DisplayStudentDetails");
+            else
+            {
+                return RedirectToAction("StaffLogin");
+            }
         }
         #endregion
 
@@ -233,9 +272,6 @@ namespace StaffManagement.Controllers
         [HttpPost]
         public ActionResult Upload(IFormFile FormFile)
         {
-
-            
-
             if (FormFile != null)
             {
                 FileUpload fileupload = new FileUpload();
@@ -258,34 +294,35 @@ namespace StaffManagement.Controllers
                         var Posttask = client.PostAsJsonAsync(client.BaseAddress, fileupload);
                         Posttask.Wait();
                         var checkresult = Posttask.Result;
+                        
                         if (checkresult.IsSuccessStatusCode)
                         {
-                            return RedirectToAction("StudentmarkShow");
+                            return RedirectToAction("AllStudentMark");
                         }
                         else if (checkresult.ReasonPhrase.Equals("Expectation Failed"))
                         {
                             TempData["ExcelNotify"] = "Some of the student Is not in student detail please update student detail first...";
-                            return RedirectToAction("Studentdashboard");
+                            return RedirectToAction("DisplayStudentDetails");
                         }
 
                         else if (checkresult.ReasonPhrase.Equals("Conflict"))
                         {
                             TempData["ExcelNotify"] = "Please check Excel file..Column should be not null...";
-                            return RedirectToAction("Studentdashboard");
+                            return RedirectToAction("DisplayStudentDetails");
                         }
                         else if (checkresult.ReasonPhrase.Equals("Not Found"))
                         {
                             TempData["ExcelNotify"] = "connection To API failed...";
-                            return RedirectToAction("Studentdashboard");
+                            return RedirectToAction("DisplayStudentDetails");
                         }
                     }
 
                 }
                 TempData["ExcelNotify"] = "select Excel File only";
-                return RedirectToAction("Studentdashboard");
+                return RedirectToAction("DisplayStudentDetails");
             }
             TempData["ExcelNotify"] = "Please select file to upload";
-            return RedirectToAction("Studentdashboard");
+            return RedirectToAction("DisplayStudentDetails");
             //if (FormFile != null)
             //{
 
@@ -329,11 +366,73 @@ namespace StaffManagement.Controllers
             ////_testService.AddBook(
             ////_testService.ImportExcelFile(FormFile);
             //return View();
+           
         }
         #endregion
 
-        
+        #region StudentMarkforstaffView
 
+        
+        public ActionResult AllStudentMark()
+        {
+            if (HttpContext.Session.GetString("token") != null)
+            {
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/GetAllStudentMarkDetails");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var tmp = client.GetAsync(client.BaseAddress).Result;
+                    var result = tmp.Content.ReadAsAsync<List<StudentMarkDetails>>().Result;
+
+
+                    return View(result);
+                }
+            }
+            else
+            {
+                return RedirectToAction("StudentLogin");
+            }
+        }
+        #endregion
+
+        #region DeleteStudentMark
+
+        
+        public ActionResult DeleteStudentMark(int id)
+
+        {
+
+            if (HttpContext.Session.GetString("token") != null)
+            {
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/DeleteStudentMark");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    var tmp = client.DeleteAsync("?id=" + id).Result;
+                }
+                //_testService.DeleteBook(id);
+            
+            return RedirectToAction("AllStudentMark");
+            }
+            else
+            {
+                return RedirectToAction("StaffLogin");
+            }
+
+        }
+        #endregion
+
+        #region Logout
+
+        
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Mainpage");
+        }
+        #endregion
     }
 
 }

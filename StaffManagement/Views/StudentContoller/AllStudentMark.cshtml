@@ -1,0 +1,86 @@
+﻿@model IEnumerable<StaffManagement.Core.Model.StudentMarkDetails>
+
+@{
+    ViewData["Title"] = "AllStudentMark";
+}
+
+<h1 class="text-center text-capitalize text-info">STUDENTMARK</h1>
+
+
+<table class="table table-striped table-bordered  table-hover">
+    <thead class="bg-danger">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MarkId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roll_No)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tamil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.English)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maths)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Science)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Social)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Average)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarkId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Roll_No)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tamil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.English)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maths)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Science)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Social)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Average)
+            </td>
+            <td>
+
+                @Html.ActionLink("Delete", "DeleteStudentMark", new { id = item.MarkId }, new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

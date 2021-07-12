@@ -20,9 +20,6 @@ namespace StaffManagement.Resources.Repository
 {
     public class TestRepository : ITestRepository
     {
-
-
-
         #region CreatingStudentDetail
 
 
@@ -80,7 +77,11 @@ namespace StaffManagement.Resources.Repository
             }
             return false;
         }
+        #endregion
 
+        #region DeleteStudent
+
+       
         public bool DeleteStudent(int id)
         {
             using (SampletestContext DeleteEntities = new SampletestContext())
@@ -97,7 +98,9 @@ namespace StaffManagement.Resources.Repository
             }
             return false;
         }
-        #region MyRegion
+        #endregion
+
+        #region EditStudentDetails
         public StudentDetails EditStudentDetails(int id)
         {
             using (SampletestContext editEntity = new SampletestContext())
@@ -127,9 +130,6 @@ namespace StaffManagement.Resources.Repository
                 return studentEditDetails;
             }
         }
-
-        #endregion
-
 
         #endregion
 
@@ -237,28 +237,53 @@ namespace StaffManagement.Resources.Repository
                     
                         foreach (var a in artistAlbums)
                         {
-                        
-                            Student_mark_information newdata = new Student_mark_information();
-                        if (a.Roll_No != newdata.Roll_No)
-                        { 
-                            newdata.Roll_No = a.Roll_No;
-                            newdata.Name = a.Name;
-                            newdata.Tamil = a.Tamil;
-                            newdata.English = a.English;
-                            newdata.Maths = a.Maths;
-                            newdata.Science = a.Science;
-                            newdata.Social = a.Social;
-                            newdata.Total = a.Total;
-                            newdata.Average = a.Average;
-                            newsave.Student_mark_information.Add(newdata);
+                        Student_mark_information newdata = new Student_mark_information();
+                        var checkforexist = _context.Student_mark_information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
+                        if (checkforexist != null)
+                        {
+                            checkforexist.Roll_No = a.Roll_No;
+                            checkforexist.Name = a.Name;
+                            checkforexist.Tamil = a.Tamil;
+                            checkforexist.English = a.English;
+                            checkforexist.Maths = a.Maths;
+                            checkforexist.Science = a.Science;
+                            checkforexist.Social = a.Social;
+                            checkforexist.Total = a.Total;
+                            checkforexist.Average = a.Average;
+                            
                             newsave.SaveChanges();
                         }
-                           
+                        else
+                        {
+                            
 
+                            var checkfordetail = _context.Student_mark_information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
+                            if (checkfordetail == null)
+                            {
+                                newdata.Roll_No = a.Roll_No;
+                                newdata.Name = a.Name;
+                                newdata.Tamil = a.Tamil;
+                                newdata.English = a.English;
+                                newdata.Maths = a.Maths;
+                                newdata.Science = a.Science;
+                                newdata.Social = a.Social;
+                                newdata.Total = a.Total;
+                                newdata.Average = a.Average;
+                                newsave.Student_mark_information.Add(newdata);
+                                newsave.SaveChanges();
+                            }
                         }
-                    
+
+
+                       
+                           
+                        
+                    }
+                       
+
                 }
             }
+           
         }
 
 
@@ -318,6 +343,62 @@ namespace StaffManagement.Resources.Repository
                 }
             }
             return studentMarkList;
+        }
+        #endregion
+
+        #region GetallstudentMarkfordispaly
+
+       
+        public List<StudentMarkDetails> AllStudentMarkList()
+        {
+            List<StudentMarkDetails> studentMarkList = new List<StudentMarkDetails>();
+            using (SampletestContext markDisplayEntity = new SampletestContext())
+            {
+                var displayValue = markDisplayEntity.Student_mark_information.Where(x=>x.Is_Deleted==false).ToList();
+                if (displayValue != null)
+                {
+                    foreach (var studentMarkValues in displayValue)
+                    {
+                        StudentMarkDetails getStudentDetails = new StudentMarkDetails();
+                        getStudentDetails.MarkId = studentMarkValues.Student_Mark_Id;
+                        getStudentDetails.Roll_No = studentMarkValues.Roll_No;
+                        getStudentDetails.Name = studentMarkValues.Name;
+                        getStudentDetails.Tamil = studentMarkValues.Tamil;
+                        getStudentDetails.English = studentMarkValues.English;
+                        getStudentDetails.Maths = studentMarkValues.Maths;
+                        getStudentDetails.Science = studentMarkValues.Science;
+                        getStudentDetails.Social = studentMarkValues.Social;
+                        getStudentDetails.Total = studentMarkValues.Total;
+                        getStudentDetails.Average = studentMarkValues.Average;
+
+
+                        studentMarkList.Add(getStudentDetails);
+                    }
+                }
+            }
+            return studentMarkList;
+
+        }
+        #endregion
+
+        #region DeleteMark
+
+       
+        public bool DeleteMark(int id)
+        {
+            using (SampletestContext DeleteEntities = new SampletestContext())
+            {
+                var deleteValue = DeleteEntities.Student_mark_information.Where(x => x.Student_Mark_Id == id && x.Is_Deleted == false).SingleOrDefault();
+                if (deleteValue != null)
+                {
+                    deleteValue.Is_Deleted = true;
+                    deleteValue.Updated_time_stamp = DateTime.Now;
+                    DeleteEntities.SaveChanges();
+                    return true;
+                }
+
+            }
+            return false;
         }
         #endregion
     }

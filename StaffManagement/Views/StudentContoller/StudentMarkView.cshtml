@@ -4,13 +4,10 @@
     ViewData["Title"] = "StudentMarkView";
 }
 
-<h1>StudentMarkView</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+
+<table class="table table-responsive-lg table-striped">
+    <thead class="bg-info">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Roll_No)
@@ -43,41 +40,48 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Roll_No)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tamil)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.English)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Maths)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Science)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Social)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Average)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roll_No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tamil)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.English)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Maths)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Science)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Social)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                   @Html.DisplayFor(modelItem => item.Average)
+                   
+                </td>
+                <td></td>
+            </tr>
+            <h1 class="text-center text-danger">
+                Welcome @Html.DisplayFor(modelItem => item.Name) 
+            </h1>
+            <tr>
+
+            </tr>
+          
+
+        }
+
     </tbody>
 </table>

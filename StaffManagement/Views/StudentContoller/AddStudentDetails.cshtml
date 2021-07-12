@@ -164,19 +164,14 @@
 
         </table>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Submit" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
-            <input type="reset" value="Reset" class="btn btn-success" />
-        </div>
-    </div>
+    
 
-    @*@if(Model.StudentId!=0)
+    @if(Model.StudentId>0)
         {
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Update" class="btn btn-default" onclick="SubmitDetails()" id="buttonName" />
-                <input type="reset" value="Reset" class="btn btn-default" />
+                <input type="submit" value="Update" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
+                <input type="reset" value="Reset" class="btn btn-success" />
             </div>
         </div>
         }
@@ -184,25 +179,23 @@
         {
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" onclick="SubmitDetails()" id="buttonName" />
-                <input type="reset" value="Reset" class="btn btn-default" />
+                <input type="submit" value="Submit" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
+                <input type="reset" value="Reset" class="btn btn-success" />
             </div>
         </div>
-        }*@
+        }
 </div>
 
 }
-@if (ViewBag.Message != null)
+@if (TempData["Message"] != null)
 {
-    <script type="text/javascript"> window.onload = function () { alert("@ViewBag.Message"); };</script>
+    <script type="text/javascript"> window.onload = function () { alert("@TempData["Message"]"); };</script>
 }
-<span class="lp">
 
-    @Html.ActionLink("Back to Login", "StaffLogin")
-</span>
 <span class="li">
+    @Html.ActionLink("Back to Listpage", "DisplayStudentDetails", new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
+
     
-    @Html.ActionLink("Back to Listpage", "DisplayStudentDetails")
 </span>
 
 

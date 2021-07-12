@@ -18,5 +18,7 @@ namespace StaffManagement.Core.IServices
         public void ImportFileUpload(FileUpload fileupload);
         public bool StudentLogin(StudentDetails loginDetails);
         public List<StudentMarkDetails> GetStudentMarkList(StudentDetails StudentList);
+        public List<StudentMarkDetails> AllStudentMarkList();
+        public bool DeleteMark(int id);
     }
 }

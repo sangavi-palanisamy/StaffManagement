@@ -5,31 +5,44 @@
 }
 
 
-<h1>ImportExcelFile</h1>
+<div class="move">
 
-<form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
-    <dl>
-        <dt>
-            <label>Upload Excel:</label>
-        </dt>
-        <dd>
-            <input type="file" name="FormFile" id="FormFile">
+    <form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
+        <dl>
+            <dt>
+                <label>Upload Excel:</label>
+            </dt>
+            <dd>
+                <input type="file" name="FormFile" id="FormFile" required>
 
-        </dd>
-    </dl>
-    <input class="btn" type="submit" value="Upload" />
-</form>
-<br />
-<div class="">
-    <!--Show Message if file is uploaded or not-->
-    @ViewBag.Message
+            </dd>
+        </dl>
+        <input class="btn btn-success" type="submit" value="Upload">
+    </form>
+    <br />
+    <div class="">
+        <!--Show Message if file is uploaded or not-->
+        @ViewBag.Message
+    </div>
 </div>
 <p>
+    @Html.ActionLink("CreateNewStudentDetail", "AddStudentDetails", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
+    @Html.ActionLink("ViewMark", "AllStudentMark", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
 
-    @Html.ActionLink("CreateNewStudentDetail", "AddStudentDetails", new { @class = "btn btn-success" })
+
+
 </p>
+@if (TempData["login"] != null)
+{
+    <script type="text/javascript"> window.onload = function () { alert("@TempData["login"]"); };</script>
+}
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript"> window.onload = function () { alert("@TempData["Message"]"); };</script>
+}
+
 <table class="table table-bordered table-striped table-light table-hover">
-    <thead>
+    <thead class="text-danger">
         <tr>
             <th>
 
@@ -84,7 +97,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StudentId)
+                    @Html.HiddenFor(modelItem => item.StudentId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
@@ -133,14 +146,10 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Delete", "StudentDeleteDetails", new { id = item.StudentId, @class = "btn btn-success" }, new { onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
+                    @Html.ActionLink("Delete", "StudentDeleteDetails", new { id = item.StudentId }, new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
 
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@if (ViewBag.Message != null)
-{
-    <script type="text/javascript"> window.onload = function () { alert("@ViewBag.Message"); };</script>
-}

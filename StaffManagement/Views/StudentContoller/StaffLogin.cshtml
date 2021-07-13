@@ -6,26 +6,26 @@
 @using (Html.BeginForm("StaffLogin", "StudentContoller", new { @class = "form-horizontal", role = "form", id = "formDetails" }))
 {
 
-<div class="border bg-light">
-    <img alt="Qries"  class="center" src="https://vle.westwoodcollege.coop/file.php/1/home-icons/staff-portal-icon.jpg"
-                                     width="10" height="200">
-         
+    <div class="border bg-light">
+        <img alt="Qries" class="center" src="https://vle.westwoodcollege.coop/file.php/1/home-icons/staff-portal-icon.jpg"
+             width="10" height="200">
 
 
-    <div class="textbox">
-        <i class="fa fa-user" aria-hidden="true"></i>
-        @Html.TextBoxFor(x => x.StaffName, new { id = "example", @class = "main" })
+
+        <div class="textbox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            @Html.TextBoxFor(x => x.StaffName, new { id = "example", @class = "main" })
+        </div>
+
+
+        <div class="textbox">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            @Html.PasswordFor(x => x.Password, new { id = "example1", @class = "main" })
+        </div>
+
+        <button class="btn btn-success btn-ladda text-center" data-style="expand-left" id='check'>Submit</button>
+
     </div>
-
-
-    <div class="textbox">
-        <i class="fa fa-lock" aria-hidden="true"></i>
-        @Html.PasswordFor(x => x.Password, new { id = "example1", @class = "main" })
-    </div>
-
-    <button class="btn btn-success btn-ladda text-center" data-style="expand-left" id='check'>Submit</button>
- 
-</div>
 
 
 }
@@ -40,7 +40,7 @@
 }
 
 <script type='text/javascript'>
-   
+
     $(function () {
 
         $("#check").click(function () {
@@ -58,3 +58,5 @@
         });
     });
 </script>
+
+

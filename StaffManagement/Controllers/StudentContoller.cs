@@ -122,7 +122,7 @@ namespace StaffManagement.Controllers
 
         public ActionResult StudentMarkView(StudentDetails StudentList)
         {
-            if (HttpContext.Session.GetString("token") != null)
+            if (HttpContext.Session.GetString("studenttoken") != null)
             {
                 using (HttpClient client = new HttpClient())
                 {
@@ -375,7 +375,7 @@ namespace StaffManagement.Controllers
         
         public ActionResult AllStudentMark()
         {
-            if (HttpContext.Session.GetString("token") != null)
+            if (HttpContext.Session.GetString("studenttoken") != null)
             {
 
                 using (HttpClient client = new HttpClient())

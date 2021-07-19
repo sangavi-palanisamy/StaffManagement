@@ -3,29 +3,37 @@
 <script src="~/js/site.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
 @using (Html.BeginForm("StaffLogin", "StudentContoller", new { @class = "form-horizontal", role = "form", id = "formDetails" }))
 {
 
-    <div class="border bg-light">
-        <img alt="Qries" class="center" src="https://vle.westwoodcollege.coop/file.php/1/home-icons/staff-portal-icon.jpg"
-             width="10" height="200">
+<div class="border bg-light box">
+    <img alt="Qries" class="center" src="https://vle.westwoodcollege.coop/file.php/1/home-icons/staff-portal-icon.jpg"
+         width="10" height="200">
 
-
-
-        <div class="textbox">
-            <i class="fa fa-user" aria-hidden="true"></i>
-            @Html.TextBoxFor(x => x.StaffName, new { id = "example", @class = "main" })
-        </div>
-
-
-        <div class="textbox">
-            <i class="fa fa-lock" aria-hidden="true"></i>
-            @Html.PasswordFor(x => x.Password, new { id = "example1", @class = "main" })
-        </div>
-
-        <button class="btn btn-success btn-ladda text-center" data-style="expand-left" id='check'>Submit</button>
-
+    <div class="textbox">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        @Html.TextBoxFor(x => x.StaffName, new { id = "example", @class = "main" })
     </div>
+
+
+    <div class="textbox">
+
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        @Html.PasswordFor(x => x.Password, new { id = "example1", @class = "main", TextMode = "Password", runat = "server", CssClass = "form-control" })
+    </div>
+
+    <div id="formsubmitbutton">
+
+
+        <button name="submitter" value="Submit Button" class="btn btn-success btn-ladda text-center" data-style="expand-left" id='check' onclick="ButtonClicked()">Submit</button>
+    </div>
+    <div id="buttonreplacement" style="margin-left:320px; display:none;">
+        <img src="//www.willmaster.com/images/preload.gif" class="text-center "alt="loading...">
+    </div>
+
+</div>
 
 
 }
@@ -59,4 +67,25 @@
     });
 </script>
 
+
+
+
+<script type="text/javascript">
+    
+    function ButtonClicked() {
+        document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
+        document.getElementById("buttonreplacement").style.display = ""; // to display
+        return true;
+    }
+    var FirstLoading = true;
+    function RestoreSubmitButton() {
+        if (FirstLoading) {
+            FirstLoading = false;
+            return;
+        }
+        document.getElementById("formsubmitbutton").style.display = ""; 
+        document.getElementById("buttonreplacement").style.display = "none";
+    }
+    document.onfocus = RestoreSubmitButton;
+</script>
 

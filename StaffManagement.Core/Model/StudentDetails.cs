@@ -18,13 +18,17 @@ namespace StaffManagement.Core.Model
         public string FatherLastName { get; set; }
         public string MotherFirstName { get; set; }
         public string MotherLastName { get; set; }
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
         public long StudentPhoneNumber { get; set; }
         public long FatherPhoneNumber { get; set; }
         public string FatherOccupation { get; set; }
         public string RollNumber { get; set; }
         public string Password { get; set; }
-            }
+        public string Subject { get; set; }
+       
+        public DateTime? DateTime { get; set; }
+    }
 }

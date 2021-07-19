@@ -4,30 +4,21 @@
     ViewData["Title"] = "DisplayStudentDetails";
 }
 
-
-<div class="move">
-
-    <form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
-        <dl>
-            <dt>
-                <label>Upload Excel:</label>
-            </dt>
-            <dd>
-                <input type="file" name="FormFile" id="FormFile" required>
-
-            </dd>
-        </dl>
-        <input class="btn btn-success" type="submit" value="Upload">
-    </form>
-    <br />
-    <div class="">
-        <!--Show Message if file is uploaded or not-->
-        @ViewBag.Message
-    </div>
-</div>
 <p>
-    @Html.ActionLink("CreateNewStudentDetail", "AddStudentDetails", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
-    @Html.ActionLink("ViewMark", "AllStudentMark", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
+    <div class="move">
+
+        <form enctype="multipart/form-data" method="post" asp-controller="StudentContoller" asp-action="Upload">
+            <input type="file" name="FormFile" id="FormFile" class="mov" required>
+            <button class="fa fa-upload  btn btn-success" type="submit" value="Upload" aria-hidden="true"></button>
+        </form>
+
+
+    </div>
+
+    @Html.ActionLink("CreateNewStudentDetail", "AddStudentDetails", "StudentContoller", null, new { @class = " fa fa-plus btn btn-primary btn-large" })
+    @Html.ActionLink("ViewMark", "AllStudentMark", "StudentContoller", null, new { @class = " fa fa-eye btn btn-primary btn-large" })
+  
+
 
 
 
@@ -40,116 +31,138 @@
 {
     <script type="text/javascript"> window.onload = function () { alert("@TempData["Message"]"); };</script>
 }
+@if (TempData["Value"] != null)
+{
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                alert("@TempData["Value"]");
+            });
+    </script>
+}
 
-<table class="table table-bordered table-striped table-light table-hover">
-    <thead class="text-danger">
-        <tr>
-            <th>
 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherFirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherLastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotherFirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotherLastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentPhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherPhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherOccupation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RollNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+
+
+
+
+<div>
+    <table class="table table-bordered table-striped table-light table-hover">
+        <thead class=" bg-danger">
             <tr>
-                <td>
-                    @Html.HiddenFor(modelItem => item.StudentId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherFirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherLastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MotherFirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MotherLastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateOfBirth)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentPhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherPhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FatherOccupation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RollNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditStudentDetails", new { id = item.StudentId }, new { @class = "btn btn-success" })
-                </td>
-
-                <td>
-                    @Html.ActionLink("Delete", "StudentDeleteDetails", new { id = item.StudentId }, new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
-
-                </td>
+                <th>
+                   
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FatherFirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FatherLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MotherFirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MotherLastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StudentPhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FatherPhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FatherOccupation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RollNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Password)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        @Html.HiddenFor(modelItem => item.StudentId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FatherFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FatherLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MotherFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MotherLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentPhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FatherPhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FatherOccupation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RollNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditStudentDetails", new { id = item.StudentId }, new { @class = " fa fa-pencil-square-o btn btn-success " })
+                    </td>
+
+                    <td>
+                        
+                        @Html.ActionLink("Delete", "StudentDeleteDetails", new { id = item.StudentId }, new { @class = " fa fa-trash btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Test", "SendEmail", "StudentContoller", new { id = item.StudentId }, new { @class = " fa fa-eye btn btn-primary btn-large" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

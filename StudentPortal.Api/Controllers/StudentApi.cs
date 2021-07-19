@@ -17,9 +17,9 @@ namespace StudentPortal.Api.Controllers
         #region TestService
 
         
-        private readonly ITestService _testService;
+        private readonly IStudentService _testService;
 
-        public StudentApi(ITestService testService)
+        public StudentApi(IStudentService testService)
         {
             _testService = testService;
         }
@@ -105,12 +105,12 @@ namespace StudentPortal.Api.Controllers
         [HttpPost]
         public ActionResult FileUpload(FileUpload fileupload)
         {
-            byte[] bytefile = fileupload.filebyte;
+            byte[] bytefile = fileupload.FileByte;
             var streama = new MemoryStream(bytefile);
             IFormFile file = new FormFile(streama, 0, bytefile.Length, "name", "fileName");
             fileupload.ExcelValues = file;
-            _testService.ImportFileUpload(fileupload);
-            return Ok();
+            var value=_testService.ImportFileUpload(fileupload);
+            return Ok(value);
         }
         #endregion
 
@@ -142,17 +142,26 @@ namespace StudentPortal.Api.Controllers
             return Ok(getMarkList);
         }
         #endregion
+
         [HttpGet]
-       public ActionResult GetAllStudentMarkDetails()
+        public ActionResult GetAllStudentMarkDetails()
         {
             var getMarkList = _testService.AllStudentMarkList();
             return Ok(getMarkList);
         }
+
         [HttpDelete]
-        public ActionResult DeleteStudentMark(int id)
+        public ActionResult DeleteStusdentMark(int id)
 
         {
             _testService.DeleteMark(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        public ActionResult SendEmail(StudentDetails studentInfo)
+        {
+            _testService.SendEmail(studentInfo);
             return Ok();
         }
  

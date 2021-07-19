@@ -23,13 +23,13 @@ namespace StaffManagement.Utilities
 
             #region Services
 
-            services.AddScoped<ITestService, TestService>();
+            services.AddScoped<IStudentService, StudentService>();
 
             #endregion
 
             #region Repository
 
-            services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
 
             #endregion
 

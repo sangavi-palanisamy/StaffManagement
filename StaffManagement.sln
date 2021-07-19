@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement", "StaffManagement\StaffManagement.csproj", "{D1349A6B-62A5-40B8-891C-39CFC399C822}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement", "StaffManagement\StaffManagement.csproj", "{D1349A6B-62A5-40B8-891C-39CFC399C822}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement.Core", "StaffManagement.Core\StaffManagement.Core.csproj", "{48AD16AE-E005-46FD-9BE7-9633E0881A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement.Core", "StaffManagement.Core\StaffManagement.Core.csproj", "{48AD16AE-E005-46FD-9BE7-9633E0881A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement.Service", "StaffManagement.Service\StaffManagement.Service.csproj", "{B958D40D-FE3F-4386-B200-A033F6D8FD0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement.Service", "StaffManagement.Service\StaffManagement.Service.csproj", "{B958D40D-FE3F-4386-B200-A033F6D8FD0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement.Resources", "StaffManagement.Resources\StaffManagement.Resources.csproj", "{2FAF9C08-3738-42E7-9D2E-BB0911FE9454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement.Resources", "StaffManagement.Resources\StaffManagement.Resources.csproj", "{2FAF9C08-3738-42E7-9D2E-BB0911FE9454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement.Utilities", "StaffManagement.Utilities\StaffManagement.Utilities.csproj", "{8EA95B7D-44CA-4074-98A0-60E965159E21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement.Utilities", "StaffManagement.Utilities\StaffManagement.Utilities.csproj", "{8EA95B7D-44CA-4074-98A0-60E965159E21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement.Entity", "StaffManagement.Entity\StaffManagement.Entity.csproj", "{2B3452FE-2872-4843-995C-D6407F9A0824}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffManagement.Entity", "StaffManagement.Entity\StaffManagement.Entity.csproj", "{2B3452FE-2872-4843-995C-D6407F9A0824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentPortal.Api", "StudentPortal.Api\StudentPortal.Api.csproj", "{624394B7-1AE6-4290-824A-99FC3CC2CDA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentPortal.API", "StudentPortal.Api\StudentPortal.API.csproj", "{624394B7-1AE6-4290-824A-99FC3CC2CDA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailWindowservice", "MailWindowservice\MailWindowservice.csproj", "{AC4D3616-367B-41E2-A0CF-E9A0E33F0FD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{624394B7-1AE6-4290-824A-99FC3CC2CDA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{624394B7-1AE6-4290-824A-99FC3CC2CDA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{624394B7-1AE6-4290-824A-99FC3CC2CDA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC4D3616-367B-41E2-A0CF-E9A0E33F0FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4D3616-367B-41E2-A0CF-E9A0E33F0FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC4D3616-367B-41E2-A0CF-E9A0E33F0FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC4D3616-367B-41E2-A0CF-E9A0E33F0FD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

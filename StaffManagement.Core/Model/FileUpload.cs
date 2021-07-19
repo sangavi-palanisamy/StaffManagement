@@ -15,8 +15,8 @@ namespace StaffManagement.Core.Model
         
         public IFormFile ExcelValues { get; set; }
         public string Filename { get; set; }
-        public byte[] filebyte { get; set; }
-        public string contenttype { get; set; }
+        public byte[] FileByte { get; set; }
+        public string ContentType { get; set; }
 
         #endregion
     }

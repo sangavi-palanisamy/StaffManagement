@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StaffManagement.Entity
 {
-    public partial class Student_mark_information
+    public partial class Student_Mark_Information
     {
         [Key]
         public int Student_Mark_Id { get; set; }

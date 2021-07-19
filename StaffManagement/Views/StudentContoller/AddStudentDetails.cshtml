@@ -6,7 +6,15 @@
 {
     <partial name="_ValidationScriptsPartial" />
 }
-
+@if(Model.StudentId==0)
+{
+<div class="bs-example">
+    <div class="alert alert-success alert-dismissible  show">
+        <strong>REMEMBER!</strong> Please enter a valid value in all the required fields before proceeding.
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+</div>
+}
 <style>
     .error {
         color: red;
@@ -110,10 +118,14 @@
                     <td> @Html.HiddenFor(model => model.StudentId)</td>
                 </tr>
                 <tr>
-                    <td> @Html.LabelFor(model => model.DateOfBirth)<i>*</i></td>
-                    <td> @Html.TextBoxFor(model => model.DateOfBirth, "", new { @class = "form-control", type = "date" })</td>
+                    <td>
+                        @Html.LabelFor(x => x.DateOfBirth, new { @class = "form-label" })<span>*</span>
+                        <i>*</i>
+                    </td>
 
-                </tr>
+                    <td>
+                        @Html.EditorFor(Modal => Modal.DateOfBirth, "", new { HtmlAttributes = new { @type = "date", @class = "form-control col-lg-8" } })
+</tr>
                 <tr>
                     <td>
                         @Html.LabelFor(model => model.Email, new { name = "Email" })<i>*</i>
@@ -179,7 +191,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Update" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
-                    <input type="reset" value="Reset" class="btn btn-success" />
+                    <input type="reset" value="Reset" class="btn btn-success fa fa-refresh" />
                 </div>
             </div>
         }
@@ -187,8 +199,8 @@
         {
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Submit" class="btn btn-success" onclick="SubmitDetails()" id="buttonName" />
-                    <input type="reset" value="Reset" class="btn btn-success" />
+                    <input type="submit" value="Submit" class=" btn btn-success" onclick="SubmitDetails()" id="buttonName" />
+                    <input type="reset" value="Reset" class="btn btn-success fa fa-refresh" />
                 </div>
             </div>
         }
@@ -202,8 +214,8 @@
 }
 
 <span class="li">
-    @Html.ActionLink("Back to Listpage", "DisplayStudentDetails", new { @class = "btn btn-success", onclick = "return confirm('Are you sure you want to Remove StudentDetail?');" })
-
+   
+    @Html.ActionLink("Back to Listpage", "DisplayStudentDetails", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
 
 </span>
 

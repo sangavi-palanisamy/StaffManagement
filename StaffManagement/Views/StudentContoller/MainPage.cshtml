@@ -1,9 +1,15 @@
 ﻿
-<div class="bg-info p-4 text-center">
+<div class="aside">
+    <div class="bg-info p-4 w-50  text-center ">
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
 
-    @Html.ActionLink("StaffLogin", "StaffLogin", "StudentContoller", null, new { @class = "btn btn-danger btn-large" })
-</div>
-<div class="bg-light p-4 text-center">
-    @Html.ActionLink("StudentLogin", "StudentLogin", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
+        @Html.ActionLink("StaffLogin", "StaffLogin", "StudentContoller", null, new { @class = "btn btn-light btn-large" })
+    </div>
 
+    <div class="bg-light p-4 w-50   text-center ">
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+
+        @Html.ActionLink("StudentLogin", "StudentLogin", "StudentContoller", null, new { @class = "btn btn-primary btn-large" })
+
+    </div>
 </div>

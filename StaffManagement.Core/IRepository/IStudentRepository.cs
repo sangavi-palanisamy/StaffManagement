@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StaffManagement.Core.IRepository
 {
-    public interface ITestRepository
+    public interface IStudentRepository
     {
 
         public bool Login(StaffLogin loginDetails);
@@ -16,10 +16,11 @@ namespace StaffManagement.Core.IRepository
         public List<StudentDetails> GetStudentList();
         public StudentDetails EditStudentDetails(int id);
         public bool DeleteStudent(int id);
-        public void ImportFileUpload(FileUpload fileupload);
+        public void ImportFileUpload(List<ErorrValidation> list);
         public List<StudentMarkDetails> GetStudentMarkList(StudentDetails StudentList);
         public bool StudentLogin(StudentDetails loginDetails);
         public List<StudentMarkDetails> AllStudentMarkList();
         public bool DeleteMark(int id);
+        public bool SendEmail(StudentDetails studentInfo);
     }
 }

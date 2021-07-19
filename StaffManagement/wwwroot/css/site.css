@@ -215,3 +215,13 @@ Change this to whatever you want and spinner elements will size to match. */
 *, *::before, *::after {
     box-sizing: border-box;
 }
+.box
+{
+    margin-left:500px;
+}
+.aside {
+    margin-left: 500px;
+}
+.mov{
+    margin-left:300px;
+}

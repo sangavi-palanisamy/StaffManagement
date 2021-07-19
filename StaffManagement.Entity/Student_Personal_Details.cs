@@ -35,9 +35,9 @@ namespace StaffManagement.Entity
         [StringLength(20)]
         public string Mother_Last_Name { get; set; }
         [Column(TypeName = "date")]
-        public DateTime Date_Of_Birth { get; set; }
+        public DateTime? Date_Of_Birth { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(50)]
         public string Email_Id { get; set; }
         public long Student_Phone_No { get; set; }
         public long Father_Phone_No { get; set; }
@@ -47,7 +47,7 @@ namespace StaffManagement.Entity
         [Column(TypeName = "datetime")]
         public DateTime Created_time_stamp { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime Upadated_time_stamp { get; set; }
+        public DateTime Updated_time_stamp { get; set; }
         public bool Is_Deleted { get; set; }
         [Required]
         [StringLength(10)]
@@ -55,5 +55,9 @@ namespace StaffManagement.Entity
         [Required]
         [StringLength(50)]
         public string Password { get; set; }
+        [StringLength(20)]
+        public string Subject { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DateTime { get; set; }
     }
 }

@@ -19,14 +19,15 @@ namespace StaffManagement.Entity
         }
 
         public virtual DbSet<Staff_Login> Staff_Login { get; set; }
+        public virtual DbSet<Student_Mark_Information> Student_Mark_Information { get; set; }
         public virtual DbSet<Student_Personal_Details> Student_Personal_Details { get; set; }
-        public virtual DbSet<Student_mark_information> Student_mark_information { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SampleTest;Integrated Security=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SampleTest;Integrated Security=True;Multiple Active Result Sets=True;Application Name=EntityFramework");
             }
         }
 
@@ -43,6 +44,20 @@ namespace StaffManagement.Entity
                 entity.Property(e => e.Update_time_stamp).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.UserName).IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Student_Mark_Information>(entity =>
+            {
+                entity.HasKey(e => e.Student_Mark_Id)
+                    .HasName("PK_Student_mark_information");
+
+                entity.Property(e => e.Created_time_stamp).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Name).IsUnicode(false);
+
+                entity.Property(e => e.Roll_No).IsUnicode(false);
+
+                entity.Property(e => e.Updated_time_stamp).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Student_Personal_Details>(entity =>
@@ -71,16 +86,7 @@ namespace StaffManagement.Entity
 
                 entity.Property(e => e.Roll_No).IsUnicode(false);
 
-                entity.Property(e => e.Upadated_time_stamp).HasDefaultValueSql("(getdate())");
-            });
-
-            modelBuilder.Entity<Student_mark_information>(entity =>
-            {
-                entity.Property(e => e.Created_time_stamp).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Name).IsUnicode(false);
-
-                entity.Property(e => e.Roll_No).IsUnicode(false);
+                entity.Property(e => e.Subject).IsUnicode(false);
 
                 entity.Property(e => e.Updated_time_stamp).HasDefaultValueSql("(getdate())");
             });

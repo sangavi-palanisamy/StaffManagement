@@ -6,9 +6,9 @@
 @using (Html.BeginForm("StudentLogin", "StudentContoller", new { @class = "form-horizontal", role = "form", id = "formDetails" }))
 {
 
-<div class="border bg-light">
-    <h1 class="h1 text-danger text-center">STUDENTLOGIN</h1>
+<div class="border bg-light box">
     
+
     <img alt="Qries" class="center" src="http://www.lnipe.edu.in/wordpress/wp-content/uploads/2020/05/Student-Portal.jpg"
          width="10" height="200">
     <div class="textbox">
@@ -23,7 +23,14 @@
     </div>
 
 
-    <button class="btn btn-primary text-center " id='check'>SUBMIT</button>
+    <div id="formsubmitbutton">
+
+
+        <button name="submitter" value="Submit Button" class="btn btn-success btn-ladda text-center" data-style="expand-left" id='check' onclick="ButtonClicked()">Submit</button>
+    </div>
+    <div id="buttonreplacement" style="margin-left:320px; display:none;">
+        <img src="//www.willmaster.com/images/preload.gif" alt="loading...">
+    </div>
 </div>
 
 
@@ -49,3 +56,22 @@
         });
     });
 </script>
+<script type="text/javascript">
+
+    function ButtonClicked() {
+        document.getElementById("formsubmitbutton").style.display = "none"; // to undisplay
+        document.getElementById("buttonreplacement").style.display = ""; // to display
+        return true;
+    }
+    var FirstLoading = true;
+    function RestoreSubmitButton() {
+        if (FirstLoading) {
+            FirstLoading = false;
+            return;
+        }
+        document.getElementById("formsubmitbutton").style.display = "";
+        document.getElementById("buttonreplacement").style.display = "none";
+    }
+    document.onfocus = RestoreSubmitButton;
+</script>
+

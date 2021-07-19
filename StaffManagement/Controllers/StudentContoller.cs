@@ -96,7 +96,7 @@ namespace StaffManagement.Controllers
                     var result = tmp.Content.ReadAsAsync<bool>().Result;
                     if (result == true)
                     {
-                        HttpContext.Session.SetString("studenttoken", loginDetails.RollNumber);
+                        HttpContext.Session.SetString("token", loginDetails.RollNumber);
                         TempData["login"] = "Login SuccessFully";
                         return RedirectToAction("StudentMarkView",loginDetails);
                         
@@ -122,7 +122,7 @@ namespace StaffManagement.Controllers
 
         public ActionResult StudentMarkView(StudentDetails StudentList)
         {
-            if (HttpContext.Session.GetString("studenttoken") != null)
+            if (HttpContext.Session.GetString("token") != null)
             {
                 using (HttpClient client = new HttpClient())
                 {
@@ -148,14 +148,20 @@ namespace StaffManagement.Controllers
         #region CreatingStudentDetail
         public IActionResult AddStudentDetails()
         {
-            StudentDetails studentEntry = new StudentDetails();
-            return View(studentEntry);
+
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                StudentDetails studentEntry = new StudentDetails();
+                return View(studentEntry);
+            }
+            else
+            {
+                return RedirectToAction("StaffLogin");
+            }
         }
         [HttpPost]
         public IActionResult AddStudentsDetails(StudentDetails studentEntry)
         {
-            if (HttpContext.Session.GetString("token") != null)
-            {
                 using (HttpClient client = new HttpClient())
                 {
 
@@ -181,11 +187,8 @@ namespace StaffManagement.Controllers
                     return RedirectToAction("DisplayStudentDetails");
 
                 }
-            }
-            else
-            {
-                return RedirectToAction("StaffLogin");
-            }
+            
+            
             //_testService.AddBook(bookDetails);
 
         }
@@ -211,7 +214,7 @@ namespace StaffManagement.Controllers
             }
             else
             {
-                return RedirectToAction("StaffLogin");
+                return RedirectToAction("MainPage");
 
             }
 
@@ -282,46 +285,93 @@ namespace StaffManagement.Controllers
                 using (var stream = new MemoryStream())
                 {
                     FormFile.CopyToAsync(stream);
-                    fileupload.filebyte = stream.ToArray();
+                    fileupload.FileByte = stream.ToArray();
                 }
-                fileupload.contenttype = FormFile.ContentType;
+                fileupload.ContentType = FormFile.ContentType;
 
                 if (fileupload.Filename.EndsWith(".xls") || fileupload.Filename.EndsWith(".xlsx"))
                 {
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/FileUpload");
-                        var Posttask = client.PostAsJsonAsync(client.BaseAddress, fileupload);
-                        Posttask.Wait();
-                        var checkresult = Posttask.Result;
+                        var Posttask = client.PostAsJsonAsync(client.BaseAddress, fileupload).Result;
+                        var result = Posttask.Content.ReadAsAsync<int>().Result;
                         
-                        if (checkresult.IsSuccessStatusCode)
+                        
+
+                        if (result == 1)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT NAME";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 2)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT ROLLNUMBER";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 3)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT TAMIL MARK";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+
+                        if (result == 4)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT ENGLISH MARK";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+
+                        if (result == 5)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT MATHS MARK";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+
+                        if (result == 6)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT SCIENCE MARK";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+
+                        if (result == 7)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT SOCIAL MARK";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 8)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT TOTAL";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 9)
+                        {
+                            TempData["Value"] = "PLEASE ENTER THE CORRECT AVERAGE";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 10)
+                        {
+                            TempData["Value"] = "PLEASE REMOVE NULLS VALUES ";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+                        if (result == 200)
+                        {
+                            TempData["Value"] = "File UPLOADED SUCESSFULLY";
+                            return RedirectToAction("DisplayStudentDetails");
+                        }
+
+
+                        if (Posttask.IsSuccessStatusCode)
                         {
                             return RedirectToAction("AllStudentMark");
                         }
-                        else if (checkresult.ReasonPhrase.Equals("Expectation Failed"))
-                        {
-                            TempData["ExcelNotify"] = "Some of the student Is not in student detail please update student detail first...";
-                            return RedirectToAction("DisplayStudentDetails");
-                        }
 
-                        else if (checkresult.ReasonPhrase.Equals("Conflict"))
-                        {
-                            TempData["ExcelNotify"] = "Please check Excel file..Column should be not null...";
-                            return RedirectToAction("DisplayStudentDetails");
-                        }
-                        else if (checkresult.ReasonPhrase.Equals("Not Found"))
-                        {
-                            TempData["ExcelNotify"] = "connection To API failed...";
-                            return RedirectToAction("DisplayStudentDetails");
-                        }
                     }
 
                 }
-                TempData["ExcelNotify"] = "select Excel File only";
+                
                 return RedirectToAction("DisplayStudentDetails");
             }
-            TempData["ExcelNotify"] = "Please select file to upload";
+           
             return RedirectToAction("DisplayStudentDetails");
             //if (FormFile != null)
             //{
@@ -375,7 +425,7 @@ namespace StaffManagement.Controllers
         
         public ActionResult AllStudentMark()
         {
-            if (HttpContext.Session.GetString("studenttoken") != null)
+            if (HttpContext.Session.GetString("token") != null)
             {
 
                 using (HttpClient client = new HttpClient())
@@ -424,9 +474,35 @@ namespace StaffManagement.Controllers
         }
         #endregion
 
+        public ActionResult SendEmail(int id)
+        {
+            StudentDetails value = new StudentDetails();
+            value.StudentId = id;
+            
+            return View(value);
+        }
+        [HttpPost]
+        public ActionResult SendEmail(StudentDetails studentInfo)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+
+
+
+                client.BaseAddress = new Uri("http://localhost:20481/api/StudentApi/SendEmail");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var ItemJson = new StringContent(JsonSerializer.Serialize(studentInfo), System.Text.Encoding.UTF8, "application/json");
+                var tmp = client.PostAsync(client.BaseAddress, ItemJson).Result;
+                var result = tmp.Content.ReadAsAsync<bool>().Result;
+
+
+            }
+                return View();
+        }
+
         #region Logout
 
-        
+
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();

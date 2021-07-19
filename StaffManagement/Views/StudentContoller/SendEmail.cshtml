@@ -1,0 +1,35 @@
+﻿@model StaffManagement.Core.Model.StudentDetails
+@using (Html.BeginForm("SendEmail", "StudentContoller", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "formDetails" }))
+{
+
+    <table class="bg-light table-striped">
+        <tr>
+            <td>
+                @Html.HiddenFor(Modal => Modal.StudentId)
+            </td>
+
+        </tr>
+      
+        <tr>
+            <td>
+                @Html.DropDownListFor(Modal => Modal.Subject, new List<SelectListItem>
+                    { new SelectListItem() { Text="---Select Department---", Value=""},
+                    new SelectListItem { Text="TAMIL", Value="TAMIL"},
+                    new SelectListItem { Text="ENGLISH", Value="ENGLISH"},
+                    new SelectListItem { Text="MATHS", Value="MATHS"}, })
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                @Html.EditorFor(Modal => Modal.DateTime, "", new { HtmlAttributes = new { @type = "date" } })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Submit" class="btn btn-success" />
+            </td>
+        </tr>
+    </table>
+   
+}

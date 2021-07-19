@@ -1,4 +1,4 @@
-﻿using LinqToExcel;
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace StaffManagement.Resources.Repository
 {
-    public class TestRepository : ITestRepository
+    public class StudentRepository : IStudentRepository
     {
         #region CreatingStudentDetail
 
@@ -65,10 +65,10 @@ namespace StaffManagement.Resources.Repository
                         studentValue.Father_Phone_No = studentEntry.FatherPhoneNumber;
                         studentValue.Gender = studentEntry.Gender;
                         studentValue.Father_Occupation = studentEntry.FatherOccupation;
-                        
 
 
-                        studentValue.Upadated_time_stamp = DateTime.Now;
+
+                        studentValue.Updated_time_stamp = DateTime.Now;
 
                         studentEntity.SaveChanges();
                     }
@@ -81,7 +81,7 @@ namespace StaffManagement.Resources.Repository
 
         #region DeleteStudent
 
-       
+
         public bool DeleteStudent(int id)
         {
             using (SampletestContext DeleteEntities = new SampletestContext())
@@ -90,7 +90,11 @@ namespace StaffManagement.Resources.Repository
                 if (deleteValue != null)
                 {
                     deleteValue.Is_Deleted = true;
-                    deleteValue.Upadated_time_stamp = DateTime.Now;
+                    deleteValue.Updated_time_stamp = DateTime.Now;
+                    DeleteEntities.SaveChanges();
+                    var Value = DeleteEntities.Student_Mark_Information.Where(x => x.Roll_No == deleteValue.Roll_No && x.Is_Deleted == false).SingleOrDefault();
+                    Value.Is_Deleted = true;
+                    Value.Updated_time_stamp = DateTime.Now;
                     DeleteEntities.SaveChanges();
                     return true;
                 }
@@ -170,7 +174,7 @@ namespace StaffManagement.Resources.Repository
             return studentList;
         }
 
-        
+
         #endregion
 
         #region StaffLogin
@@ -178,17 +182,17 @@ namespace StaffManagement.Resources.Repository
 
         public bool Login(StaffLogin loginDetails)
         {
-           if( loginDetails!=null)
-            { 
-            using (SampletestContext  loginEntity=new SampletestContext())
+            if (loginDetails != null)
             {
+                using (SampletestContext loginEntity = new SampletestContext())
+                {
                     var staffLoginValues = loginEntity.Staff_Login.Where(x => x.UserName == loginDetails.StaffName && x.Password == loginDetails.Password && x.Is_Deleted == false).SingleOrDefault();
-                    if(staffLoginValues!=null)
+                    if (staffLoginValues != null)
                     {
                         return true;
-                    }  
-                    
-            }
+                    }
+
+                }
             }
             return false;
         }
@@ -196,95 +200,59 @@ namespace StaffManagement.Resources.Repository
 
         #region FileUpload
 
-        public async void ImportFileUpload(FileUpload fileupload)
+        public void ImportFileUpload(List<ErorrValidation> list)
         {
-            var _context = new SampletestContext();
+            SampletestContext newsave = new SampletestContext();
 
-            
-            string filename = fileupload.Filename;
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "Root", "FileUpload", filename);
-           
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            foreach (var a in list)
             {
-               await fileupload.ExcelValues.CopyToAsync(fileStream);
-            }
-            
-
-            //create directory "Uploads" if it doesn't exists
-
-
-            if (fileupload != null)
-            {
-                if (fileupload.contenttype == "application/vnd.ms-excel" || fileupload.contenttype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                Student_Mark_Information newdata = new Student_Mark_Information();
+                var checkforexist = newsave.Student_Mark_Information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
+                if (checkforexist != null)
                 {
-                    var connectionString = "";
-                    if (fileupload.Filename.EndsWith(".xls"))
-                    {
-                        connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", path);
-                    }
-                    else if (fileupload.Filename.EndsWith(".xlsx"))
-                    {
-                        connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";", path);
-                    }
-                    var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$]", connectionString);
-                    var ds = new DataSet();
-                    adapter.Fill(ds, "ExcelTable");
-                    DataTable dtable = ds.Tables["ExcelTable"];
-                    string sheetName = "Sheet1";
-                    var excelFile = new ExcelQueryFactory(path);
-                    var artistAlbums = from a in excelFile.Worksheet<StudentMarkDetails>(sheetName) select a;
-                    SampletestContext newsave = new SampletestContext();
-                    
-                        foreach (var a in artistAlbums)
-                        {
-                        Student_mark_information newdata = new Student_mark_information();
-                        var checkforexist = _context.Student_mark_information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
-                        if (checkforexist != null)
-                        {
-                            checkforexist.Roll_No = a.Roll_No;
-                            checkforexist.Name = a.Name;
-                            checkforexist.Tamil = a.Tamil;
-                            checkforexist.English = a.English;
-                            checkforexist.Maths = a.Maths;
-                            checkforexist.Science = a.Science;
-                            checkforexist.Social = a.Social;
-                            checkforexist.Total = a.Total;
-                            checkforexist.Average = a.Average;
-                            
-                            newsave.SaveChanges();
-                        }
-                        else
-                        {
-                            
+                    checkforexist.Roll_No = a.Roll_No;
+                    checkforexist.Name = a.Name;
+                    checkforexist.Tamil = Convert.ToInt32(a.Tamil);
+                    checkforexist.English = Convert.ToInt32(a.English);
+                    checkforexist.Maths = Convert.ToInt32(a.Maths);
+                    checkforexist.Science = Convert.ToInt32(a.Science);
+                    checkforexist.Social = Convert.ToInt32(a.Social);
+                    checkforexist.Total = Convert.ToInt32(a.Total);
+                    checkforexist.Average = Convert.ToDouble(a.Average);
 
-                            var checkfordetail = _context.Student_mark_information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
-                            if (checkfordetail == null)
-                            {
-                                newdata.Roll_No = a.Roll_No;
-                                newdata.Name = a.Name;
-                                newdata.Tamil = a.Tamil;
-                                newdata.English = a.English;
-                                newdata.Maths = a.Maths;
-                                newdata.Science = a.Science;
-                                newdata.Social = a.Social;
-                                newdata.Total = a.Total;
-                                newdata.Average = a.Average;
-                                newsave.Student_mark_information.Add(newdata);
-                                newsave.SaveChanges();
-                            }
-                        }
-
-
-                       
-                           
-                        
-                    }
-                       
-
+                    newsave.SaveChanges();
                 }
+                else
+                {
+
+
+                    var checkfordetail = newsave.Student_Mark_Information.Where(m => m.Roll_No == a.Roll_No).SingleOrDefault();
+                    if (checkfordetail == null)
+                    {
+                        newdata.Roll_No = a.Roll_No;
+                        newdata.Name = a.Name;
+                        newdata.Tamil = Convert.ToInt32(a.Tamil);
+                        newdata.English = Convert.ToInt32(a.English);
+                        newdata.Maths = Convert.ToInt32(a.Maths);
+                        newdata.Science = Convert.ToInt32(a.Science);
+                        newdata.Social = Convert.ToInt32(a.Social);
+                        newdata.Total = Convert.ToInt32(a.Total);
+                        newdata.Average = Convert.ToDouble(a.Average);
+                        newsave.Student_Mark_Information.Add(newdata);
+                        newsave.SaveChanges();
+                    }
+                }
+
+
+
+
+
             }
-           
+
+
         }
+
+
 
 
 
@@ -294,7 +262,7 @@ namespace StaffManagement.Resources.Repository
 
         #region StudentLogin
 
-        
+
         public bool StudentLogin(StudentDetails loginDetails)
         {
             if (loginDetails != null)
@@ -315,13 +283,13 @@ namespace StaffManagement.Resources.Repository
 
         #region GetSingleMarkList
 
-       
+
         public List<StudentMarkDetails> GetStudentMarkList(StudentDetails StudentList)
         {
             List<StudentMarkDetails> studentMarkList = new List<StudentMarkDetails>();
             using (SampletestContext markDisplayEntity = new SampletestContext())
             {
-                var displayValue = markDisplayEntity.Student_mark_information.Where(x=>x.Roll_No==StudentList.RollNumber).ToList();
+                var displayValue = markDisplayEntity.Student_Mark_Information.Where(x => x.Roll_No == StudentList.RollNumber).ToList();
                 if (displayValue != null)
                 {
                     foreach (var studentMarkValues in displayValue)
@@ -348,13 +316,13 @@ namespace StaffManagement.Resources.Repository
 
         #region GetallstudentMarkfordispaly
 
-       
+
         public List<StudentMarkDetails> AllStudentMarkList()
         {
             List<StudentMarkDetails> studentMarkList = new List<StudentMarkDetails>();
             using (SampletestContext markDisplayEntity = new SampletestContext())
             {
-                var displayValue = markDisplayEntity.Student_mark_information.Where(x=>x.Is_Deleted==false).ToList();
+                var displayValue = markDisplayEntity.Student_Mark_Information.Where(x => x.Is_Deleted == false).ToList();
                 if (displayValue != null)
                 {
                     foreach (var studentMarkValues in displayValue)
@@ -383,12 +351,12 @@ namespace StaffManagement.Resources.Repository
 
         #region DeleteMark
 
-       
+
         public bool DeleteMark(int id)
         {
             using (SampletestContext DeleteEntities = new SampletestContext())
             {
-                var deleteValue = DeleteEntities.Student_mark_information.Where(x => x.Student_Mark_Id == id && x.Is_Deleted == false).SingleOrDefault();
+                var deleteValue = DeleteEntities.Student_Mark_Information.Where(x => x.Student_Mark_Id == id && x.Is_Deleted == false).SingleOrDefault();
                 if (deleteValue != null)
                 {
                     deleteValue.Is_Deleted = true;
@@ -401,7 +369,26 @@ namespace StaffManagement.Resources.Repository
             return false;
         }
         #endregion
+
+        public bool SendEmail(StudentDetails studentInfo)
+        {
+            using (SampletestContext studentEntity = new SampletestContext())
+            {
+                var emailValue = studentEntity.Student_Personal_Details.Where(x => x.Student_Id == studentInfo.StudentId).SingleOrDefault();
+                if (emailValue != null)
+                {
+                    emailValue.Subject = studentInfo.Subject;
+                    emailValue.DateTime = studentInfo.DateTime;
+                    emailValue.Updated_time_stamp = DateTime.Now;
+
+                    studentEntity.SaveChanges();
+                }
+                return true;
+            }
+
+        }
     }
 }
+
 
 

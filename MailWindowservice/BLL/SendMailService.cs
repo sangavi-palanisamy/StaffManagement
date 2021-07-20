@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MailWindowservice.DLL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,7 +43,11 @@ namespace MailWindowservice.BLL
         // This function contains the logic to send mail.
         public static void SendEmail(String ToEmail, String Subj, string Message)
         {
-            SampleTestEntities Entity = new SampleTestEntities();
+            try
+            {
+
+                WriteErrorLog("correctly working");
+                SampleTestEntities1 Entity = new SampleTestEntities1();
             var emailList = Entity.Student_Personal_Details.Where(x=>x.Is_Deleted==false).ToList();
             foreach(var value in emailList)
             {
@@ -70,11 +75,19 @@ namespace MailWindowservice.BLL
                 WriteErrorLog("Mail sent successfully!");
             }
 
+
             catch (Exception ex)
             {
                 WriteErrorLog(ex.InnerException.Message);
                 throw;
             }
+              
+            }
+            }
+            catch (Exception ex)
+            {
+                WriteErrorLog(ex.InnerException.Message);
+                throw;
             }
         }
     }

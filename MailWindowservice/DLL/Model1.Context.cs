@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MailWindowservice.BLL
+namespace MailWindowservice.DLL
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SampleTestEntities : DbContext
+    public partial class SampleTestEntities1 : DbContext
     {
-        public SampleTestEntities()
-            : base("name=SampleTestEntities")
+        public SampleTestEntities1()
+            : base("name=SampleTestEntities1")
         {
         }
     
@@ -25,7 +25,6 @@ namespace MailWindowservice.BLL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Student_Mark_Information> Student_Mark_Information { get; set; }
         public virtual DbSet<Student_Personal_Details> Student_Personal_Details { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MailWindowservice.BLL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -24,6 +25,8 @@ namespace MailWindowservice
         public TestService()
         {
             InitializeComponent();
+
+
             //SendMailService.SendEmail("sangavi.palanisamy@dotnetethics.com", "hlo", "hi");
             int strTime = Convert.ToInt32(ConfigurationSettings.AppSettings["callDuration"]);
             getCallType = Convert.ToInt32(ConfigurationSettings.AppSettings["CallType"]);
@@ -48,22 +51,8 @@ namespace MailWindowservice
 
             timer1.AutoReset = true;
             timer1.Enabled = true;
-           
-           
-            try
-            {
-                using (ServiceController sc = new ServiceController("MailWindowservice"))
-                {
-                    var value= sc.Status == ServiceControllerStatus.Running;
-                    SendMailService.WriteErrorLog("false");
-
-                }
-            }
-            catch
-            {
-
-                SendMailService.WriteErrorLog("Service started");
-            }
+            SendMailService.WriteErrorLog("Service started");
+            
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -85,7 +74,7 @@ namespace MailWindowservice
             ts = t - System.DateTime.Now;
             if (ts.TotalMilliseconds < 0)
             {
-                ts = t.AddDays(1) - System.DateTime.Now;//Here you can increase the timer interval based on your requirments.   
+                ts = t.AddMinutes(2) - System.DateTime.Now;//Here you can increase the timer interval based on your requirments.   
             }
             return ts.TotalMilliseconds;
         }
@@ -106,10 +95,11 @@ namespace MailWindowservice
         }
 
         /////////////////////////////////////////////////////////////////////
+        [Obsolete]
         private void ServiceTimer_Tick(object sender, System.Timers.ElapsedEventArgs e)
         {
             string Msg = "Hi ! This is DailyMailSchedulerService mail.";//whatever msg u want to send write here.  
-
+            SendMailService.WriteErrorLog("Hloo");
             SendMailService.SendEmail("sangavips1999@gmail.com", "Subject", Msg);
 
             if (getCallType == 1)
